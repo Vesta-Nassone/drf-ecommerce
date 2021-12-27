@@ -33,3 +33,11 @@ class Product(models.Model):
 
     def __repr__(self):
         return '<Product object ({}) "{}">'.format(self.id, self.name)
+
+class ShoppingCart(models.Model):
+    TAX_RATE = 0.13
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
+
+    
