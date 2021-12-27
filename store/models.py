@@ -14,4 +14,12 @@ class Product(models.Model):
     sale_end = models.DateTimeField(blank=True, null=True, default=None)
     photo = models.ImageField(blank=True, null=True, default=None, upload_to='products')
 
+    def is_on_sale(self):
+        now = timezone.now()
+        if self.sale_start:
+            if self.sale_end:
+                return self.sale_start <= now <= self.sale_end
+            return self.sale_start <= now
+        return False
+
     
