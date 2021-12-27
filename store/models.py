@@ -31,4 +31,5 @@ class Product(models.Model):
             return round(discounted_price, 2)
         return self.get_rounded_price()
 
-    
+    def __repr__(self):
+        return '<Product object ({}) "{}">'.format(self.id, self.name)
