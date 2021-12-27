@@ -22,4 +22,7 @@ class Product(models.Model):
             return self.sale_start <= now
         return False
 
+    def get_rounded_price(self):
+        return round(self.price, 2)
+
     
