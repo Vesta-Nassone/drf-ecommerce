@@ -1,10 +1,12 @@
-from rest_framework import fields, serializers
+from rest_framework import serializers
 from .models import Product
+
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'name','description','price','sale_date','sale_end')
+        fields = ('id', 'name', 'description',
+        'price', 'sale_date', 'sale_end')
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
