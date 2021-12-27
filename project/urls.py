@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path
 import store.views
+import store.api_views
 
 urlpatterns = [
     path("api/v1/products", store.api_views.ProductList.as_view()),
