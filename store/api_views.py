@@ -1,4 +1,3 @@
-from django.db.models import query
 from rest_framework.generics import ListAPIView
 from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import ProductSerializer
@@ -23,3 +22,4 @@ class ProductList(ListAPIView):
                 sale_start__lte=now,
                 sale_end__gte=now
             )
+        return queryset
