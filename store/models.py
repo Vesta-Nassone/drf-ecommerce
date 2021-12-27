@@ -25,4 +25,10 @@ class Product(models.Model):
     def get_rounded_price(self):
         return round(self.price, 2)
 
+    def current_price(self):
+        if self.is_on_sale():
+            discounted_price = self.price * (1 - self.DISCOUNT_RATE)
+            return round(discounted_price, 2)
+        return self.get_rounded_price()
+
     
