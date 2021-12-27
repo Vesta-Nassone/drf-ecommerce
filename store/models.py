@@ -52,4 +52,7 @@ class ShoppingCart(models.Model):
     def total(self):
         return round(self.subtotal() * self.taxes(), 2)
  
-    
+    def __repr__(self):
+        name = self.name or '[Guest]'
+        address = self.address or '[No Address]'
+        return '<ShoppingCart object ({}) "{}" "{}">'.format(self.id, name, address)
