@@ -40,4 +40,10 @@ class ShoppingCart(models.Model):
     name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
 
+    def subtotal(self):
+        amount = 0.0
+        for item in self.shopping_cart_items:
+            amount += item.quantity * item.product.get_price()
+        return round(amount, 2)
+
     
