@@ -12,7 +12,8 @@ class Product(models.Model):
     price = models.FloatField()
     sale_start = models.DateTimeField(blank=True, null=True, default=None)
     sale_end = models.DateTimeField(blank=True, null=True, default=None)
-    photo = models.ImageField(blank=True, null=True, default=None, upload_to='products')
+    photo = models.ImageField(blank=True, null=True,
+                              default=None, upload_to='products')
 
     def is_on_sale(self):
         now = timezone.now()
@@ -58,9 +59,12 @@ class ShoppingCart(models.Model):
         address = self.address or '[No Address]'
         return '<ShoppingCart object ({}) "{}" "{}">'.format(self.id, name, address)
 
+
 class ShoppingCartItem(models.Model):
-    shopping_cart = models.ForeignKey(ShoppingCart, related_name='items', related_query_name='item', on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, related_name='+', on_delete=models.CASCADE)
+    shopping_cart = models.ForeignKey(
+        ShoppingCart, related_name='items', related_query_name='item', on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        Product, related_name='+', on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
     def total(self):
