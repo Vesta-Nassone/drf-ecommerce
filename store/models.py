@@ -46,4 +46,7 @@ class ShoppingCart(models.Model):
             amount += item.quantity * item.product.get_price()
         return round(amount, 2)
 
+    def taxes(self):
+        return round(self.TAX_RATE * self.subtotal(), 2)
+
     
