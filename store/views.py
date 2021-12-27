@@ -9,3 +9,10 @@ def index(request):
         'products': Product.objects.all(),
     }
     return render(request, 'store/product_list.html', context)
+
+
+def show(request, id):
+    context = {
+        'product': Product.objects.get(id=id),
+    }
+    return render(request, 'store/product.html', context)
