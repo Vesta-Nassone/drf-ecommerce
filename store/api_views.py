@@ -1,11 +1,12 @@
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.filters import SearchFilter
-from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.exceptions import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.exceptions import ValidationError
+from rest_framework.filters import SearchFilter
+from rest_framework.generics import (CreateAPIView, ListAPIView,
+                                     RetrieveUpdateDestroyAPIView)
+from rest_framework.pagination import LimitOffsetPagination
 
-from .serializers import ProductSerializer
 from .models import Product
+from .serializers import ProductSerializer
 
 
 class ProductsPagination(LimitOffsetPagination):
@@ -67,5 +68,6 @@ class ProductRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
         if response.status_code == 200:
             from django.core.cache import cache
             product = response.data
-            cache.set('product_data_{}'.format(product['id']), {'name': product['name'],'description': product['description'],'price': product['price'],})
+            cache.set('product_data_{}'.format(product['id']), {
+                      'name': product['name'], 'description': product['description'], 'price': product['price'], })
         return response
