@@ -13,6 +13,8 @@ from .models import Product
 class ProductsPagination(LimitOffsetPagination):
     default_limit = 10
     max_limit = 100
+
+
 class ProductList(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -35,6 +37,7 @@ class ProductList(ListAPIView):
             )
         return queryset
 
+
 class ProductCreate(CreateAPIView):
     serializer_class = ProductSerializer
 
@@ -47,15 +50,15 @@ class ProductCreate(CreateAPIView):
             raise ValidationError({'price': 'A valid number is required.'})
         return super().create(request, *args, **kwargs)
 
+
 class ProductDestroy(DestroyAPIView):
     queryset = Product.objects.all()
     lookup_field = 'id'
-
 
     def delete(self, request, *args, **kwargs):
         product_id = request.data.get('id')
         response = super.delete(request, *args, **kwargs)
         if response.status_code == 204:
-            from django.core,cache import cache
+            from django.core, cache import cache
             cache.delete('product_data_{}'.format(product_id))
         return response
