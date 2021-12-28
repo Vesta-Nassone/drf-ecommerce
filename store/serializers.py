@@ -5,6 +5,7 @@ from .models import Product
 class ProductSerializer(serializers.ModelSerializer):
     is_on_sale = serializers.BooleanField(read_only=True)
     current_price = serializers.FloatField(read_only=True)
+    description = serializers.CharField(min_length=2, max_length=200)
 
     class Meta:
         model = Product
