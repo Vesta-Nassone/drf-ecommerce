@@ -57,7 +57,7 @@ class ProductDestroy(DestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         product_id = request.data.get('id')
-        response = super.delete(request, *args, **kwargs)
+        response = super().delete(request, *args, **kwargs)
         if response.status_code == 204:
             from django.core.cache import cache
             cache.delete('product_data_{}'.format(product_id))
