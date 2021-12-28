@@ -1,5 +1,6 @@
+from functools import cache
 from rest_framework import pagination, serializers
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.exceptions import ValidationError
@@ -45,3 +46,10 @@ class ProductCreate(CreateAPIView):
         except ValueError:
             raise ValidationError({'price': 'A valid number is required.'})
         return super().create(request, *args, **kwargs)
+
+class ProductDestroy(DestroyAPIView):
+    queryset = Product.objects.all()
+    lookup_field = 'id'
+
+
+    
