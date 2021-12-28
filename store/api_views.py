@@ -1,8 +1,10 @@
-from rest_framework import pagination
-from rest_framework.generics import ListAPIView
-from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import pagination, serializers
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.exceptions import ValidationError
+from django_filters.rest_framework import DjangoFilterBackend
+
 from .serializers import ProductSerializer
 from .models import Product
 
@@ -31,3 +33,8 @@ class ProductList(ListAPIView):
                 sale_end__gte=now
             )
         return queryset
+
+class ProductCreate(CreateAPIView):
+    serializer_class = ProductSerializer
+
+    
