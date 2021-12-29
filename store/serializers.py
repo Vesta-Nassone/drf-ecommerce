@@ -36,6 +36,13 @@ class ProductSerializer(serializers.ModelSerializer):
         items = ShoppingCartItem.objects.filter(product=instance)
         return CartItemSerializer(items, many=True).data
 
+    def update(self, instance, validated_data):
+        if validated_data.get('warranty', None):
+            instance.description += '\n\nWarranty Information:\n'
+            instance.description += b': '.join(
+                validated_data['warranty'].readlines().decode()
+            )
+        return instance
 
 class CartItemSerializer(serializers.ModelSerializer):
     quantity = serializers.IntegerField(min_value=1, max_value=100)
