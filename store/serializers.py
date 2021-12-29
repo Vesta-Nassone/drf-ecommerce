@@ -15,8 +15,9 @@ class ProductSerializer(serializers.ModelSerializer):
             'id', 'name', 'description', 'price', 'sale_start', 'sale_end', 'is_on_sale', 'current_price', 'cart_items',
         )
 
-    
-
+    def get_cart_items(self, instance):
+        items = ShoppingCartItem.objects.filter(product=instance)
+        return CartItemSerializer(items, manny=True)
 
 
 class CartItemSerializer(serializers.ModelSerializer):
