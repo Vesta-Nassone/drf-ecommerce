@@ -24,6 +24,7 @@ class ProductSerializer(serializers.ModelSerializer):
         style={'input_type': 'text', 'placeholder': '12:01 AM 28 July 2019'}
     )
     photo = serializers.ImageField(default=None)
+    warranty = serializers.FileField(write_only=True, default=None)
 
     class Meta:
         model = Product
@@ -43,9 +44,10 @@ class CartItemSerializer(serializers.ModelSerializer):
         model = ShoppingCartItem
         fields = ('product', 'quantity')
 
+
 class ProductStatSerializer(serializers.Serializer):
     stats = serializers.DictField(
         child=serializers.ListField(
             child=serializers.IntegerField(),
-        ) 
+        )
     )
