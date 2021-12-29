@@ -5,6 +5,7 @@ from rest_framework.generics import (CreateAPIView, GenericAPIView,
                                      ListAPIView, RetrieveUpdateDestroyAPIView)
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
+from rest_framework.serializers import Serializer
 
 from .models import Product
 from .serializers import ProductSerializer, ProductStatSerializer
@@ -77,3 +78,13 @@ class ProductSats(GenericAPIView):
     lookup_field= 'id'
     serializer_class = ProductStatSerializer
     queryset = Product.objects.all()
+
+    def get(self, request, format=None, id=None):
+        obj = self.get_object()
+        serializer = ProductStatSerializer({
+            'stats': {
+                '2019-01-01': [5, 10, 15],
+                '2019-01-02': [20, 1, 1]
+            }
+        })
+        return Response(serializer.data)
