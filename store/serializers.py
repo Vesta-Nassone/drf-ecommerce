@@ -9,7 +9,9 @@ class ProductSerializer(serializers.ModelSerializer):
     description = serializers.CharField(min_length=2, max_length=200)
     cart_items = serializers.SerializerMethodField()
     # price = serializers.FloatField(min_value=1, max_value=100000)
-    price = serializers.DecimalField(min_value=1, max_value=100000, max_digits=None, decimal_places=2)
+    price = serializers.DecimalField(
+        min_value=1, max_value=100000, max_digits=None, decimal_places=2)
+        
 
     class Meta:
         model = Product
@@ -24,6 +26,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class CartItemSerializer(serializers.ModelSerializer):
     quantity = serializers.IntegerField(min_value=1, max_value=100)
+
     class Meta:
         model = ShoppingCartItem
         fields = ('product', 'quantity')
