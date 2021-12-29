@@ -23,11 +23,12 @@ class ProductSerializer(serializers.ModelSerializer):
         help_text='Accepted format is "12:01 PM 16 December 2021"',
         style={'input_type': 'text', 'placeholder': '12:01 AM 28 July 2019'}
     )
+    photo = serializers.ImageField(default=None)
 
     class Meta:
         model = Product
         fields = (
-            'id', 'name', 'description', 'price', 'sale_start', 'sale_end', 'is_on_sale', 'current_price', 'cart_items',
+            'id', 'name', 'description', 'price', 'sale_start', 'sale_end', 'is_on_sale', 'current_price', 'cart_items', 'photo',
         )
 
     def get_cart_items(self, instance):
