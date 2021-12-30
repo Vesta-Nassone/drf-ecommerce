@@ -28,3 +28,7 @@ class ProductCreateTestCase(APITestCase):
             float(product_attr['price'])
         )
 
+class ProductDestroyTestCase(APITestCase):
+    def test_delete_product(self):
+        
+
