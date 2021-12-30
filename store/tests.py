@@ -20,6 +20,10 @@ class ProductCreateTestCase(APITestCase):
         for attr, expected_value in product_attr.items():
             self.assertEqual(response.data[attr], expected_value)
         self.assertEqual(
+            response.data['is_on_sale'],
+            False
+        )
+        self.assertEqual(
             response.data['current_price'],
             float(product_attr['price'])
         )
