@@ -46,6 +46,10 @@ class ProductSerializer(serializers.ModelSerializer):
             )
         return instance
 
+    def create(self, validated_data):
+        validated_data.pop('warranty')
+        return Product.objects.create(**validated_data)
+
 class CartItemSerializer(serializers.ModelSerializer):
     quantity = serializers.IntegerField(min_value=1, max_value=100)
 
