@@ -12,7 +12,7 @@ class ProductCreateTestCase(APITestCase):
         product_attr = {
             'name': 'New Product',
             'description': 'Awesome Product',
-            'price': '120.50'
+            'price': 120.50
         }
         response = self.client.post('/api/v1/products/new', product_attr)
         if response.status_code != 201:
@@ -57,4 +57,16 @@ class ProductListTestCase(APITestCase):
 
 
 class ProductUpdateTestCase(APITestCase):
-    
+    def test_update_product(self):
+        product = Product.objects.first()
+        response = self.client.patch(
+            '/api/v1/products/{}/'.format(product.id),
+            {
+                'name': 'New Product',
+                'description': 'Awesome product',
+                'price': 120.60
+            },
+            format='json'
+        )
+        updated = Product.objects.get(id=product.id)
+        self.assertEqual(updated.name, 'New Product')
