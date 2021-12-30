@@ -1,6 +1,8 @@
-from re import A
-from django.http import response
+import os
+
+from django.conf import settings
 from rest_framework.test import APITestCase
+
 from .models import Product
 
 # Create your tests here.
@@ -12,7 +14,7 @@ class ProductCreateTestCase(APITestCase):
         product_attr = {
             'name': 'New Product',
             'description': 'Awesome Product',
-            'price': 120.50
+            'price': '120.50'
         }
         response = self.client.post('/api/v1/products/new', product_attr)
         if response.status_code != 201:
@@ -35,7 +37,7 @@ class ProductDestroyTestCase(APITestCase):
     def test_delete_product(self):
         initial_product_count = Product.objects.count()
         product_id = Product.objects.first().id
-        self.client.delete('api/v1/products/{}/'.format(product_id))
+        self.client.delete('/api/v1/products/{}/'.format(product_id))
         self.assertEqual(
             Product.objects.count(),
             initial_product_count - 1,
@@ -49,11 +51,11 @@ class ProductDestroyTestCase(APITestCase):
 class ProductListTestCase(APITestCase):
     def test_list_products(self):
         product_count = Product.objects.count()
-        response = self.client.get('api/v1/products/')
+        response = self.client.get('/api/v1/products/')
         self.assertIsNone(response.data['next'])
         self.assertIsNone(response.data['previous'])
         self.assertEqual(response.data['count'], product_count)
-        self.assertEqual(response.data['results'], product_count)
+        self.assertEqual(len(response.data['results']), product_count)
 
 
 class ProductUpdateTestCase(APITestCase):
@@ -64,9 +66,12 @@ class ProductUpdateTestCase(APITestCase):
             {
                 'name': 'New Product',
                 'description': 'Awesome product',
-                'price': 120.60
+                'price': '120.60'
             },
             format='json'
         )
         updated = Product.objects.get(id=product.id)
         self.assertEqual(updated.name, 'New Product')
+
+    def test_upload_product_photo(self):
+       
