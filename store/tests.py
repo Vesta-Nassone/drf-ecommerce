@@ -1,3 +1,4 @@
+from re import A
 from django.http import response
 from rest_framework.test import APITestCase
 from .models import Product
@@ -53,3 +54,7 @@ class ProductListTestCase(APITestCase):
         self.assertIsNone(response.data['previous'])
         self.assertEqual(response.data['count'], product_count)
         self.assertEqual(response.data['results'], product_count)
+
+
+class ProductUpdateTestCase(APITestCase):
+    
